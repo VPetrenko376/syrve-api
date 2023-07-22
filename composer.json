@@ -1,0 +1,26 @@
+{
+    "name": "slothws/syrve-api",
+    "type": "library",
+    "description": "This project is a library for convenient usage of the Syrve API.",
+    "keywords": ["syrve", "api"],
+    "license": "MIT",
+    "homepage": "https://github.com/VPetrenko376/syrve-api",
+    "autoload": {
+        "psr-4": {
+            "Sloth\\SyrveApi\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Vladyslav Petrenko",
+            "email": "vp@sloth.ws",
+            "homepage": "https://sloth.ws",
+            "role": "Developer"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": "^7.3|^8.0",
+        "guzzlehttp/guzzle": "^7.0"
+    }
+}
