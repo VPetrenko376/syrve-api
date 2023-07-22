@@ -27,3 +27,10 @@ Get a list of employees.
 ```php
 $response = $syrve->employees->list();
 ```
+
+## Documentation
+Read [Documentation](https://vpetrenko376.github.io/syrve-api/)
+
+## License
+
+[MIT](https://github.com/VPetrenko376/syrve-api/blob/main/LICENSE)
