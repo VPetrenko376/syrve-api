@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="uk" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Співробітники - SyrveApi</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "\u0421\u043f\u0456\u0432\u0440\u043e\u0431\u0456\u0442\u043d\u0438\u043a\u0438";
+        var mkdocs_page_input_path = "methods\\employees.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <script src="../../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> SyrveApi
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Початок роботи</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Доступні методи</span></p>
+              <ul class="current">
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Співробітники</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#_2">Опис параметрів</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#_3">Список співробітників</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#_4">Список по підрозділу</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#_5">Співробітник за ідентифікатором</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#_6">Співробітник за кодом</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#_7">Створення співробітника</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#_8">Редагувати співробітника</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#_9">Видалення співробітника</a>
+    </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">SyrveApi</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a> &raquo;</li>
+          <li>Доступні методи &raquo;</li>
+      <li>Співробітники</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/VPetrenko376/syrve-api/blob/main/docs/methods/employees.md" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="_1">Співробітники</h1>
+<p>В даному розділі наведено повний опис доступних можливостей API для роботи зі співробітниками. Спочатку ознайомтесь з параметрами, які використовує Syrve. Розуміння їх значення буде корисним для вас у майбутньому при редагуванні та створенні нових співробітників.</p>
+<h2 id="_2">Опис параметрів</h2>
+<ul>
+<li><code>id</code> <em>(string)</em>: Унікальний ідентифікатор.</li>
+<li><code>code</code> <em>(string)</em>: Код в системі.</li>
+<li><code>name</code> <em>(string)</em>: Ім'я в системі.</li>
+<li><code>login</code> <em>(string)</em>: Логін для входу в бекофіс.</li>
+<li><code>password</code> <em>(string)</em>: Пароль для входу в бекофіс.</li>
+<li><code>pinCode</code> <em>(string)</em>: Пін-код для входу в iikoFront.</li>
+<li><code>mainRoleCode</code> <em>(string)</em>: Код головної ролі співробітника.</li>
+<li><code>roleCodes</code> <em>(string)</em>: Список кодів ролей співробітника.</li>
+<li><code>phone</code> <em>(string)</em>: Телефон.</li>
+<li><code>cellPhone</code> <em>(string)</em>: Мобільний телефон.</li>
+<li><code>firstName</code> <em>(string)</em>: Ім'я.</li>
+<li><code>middleName</code> <em>(string)</em>: По батькові.</li>
+<li><code>lastName</code> <em>(string)</em>: Прізвище.</li>
+<li><code>birthday</code> <em>(dateTime)</em>: Дата народження (yyyy-MM-dd'T'HH:mm).</li>
+<li><code>email</code> <em>(string)</em>: Електронна пошта.</li>
+<li><code>address</code> <em>(string)</em>: Адреса проживання.</li>
+<li><code>hireDate</code> <em>(string)</em>: Дата прийняття на роботу.</li>
+<li><code>fireDate</code> <em>(dateTime)</em>: Дата звільнення (yyyy-MM-dd'T'HH:mm).</li>
+<li><code>preferredDepartmentCode</code> <em>(string)</em>: Код переважного відділу співробітника.</li>
+<li><code>departmentCodes</code> <em>(string)</em>: Список кодів відділів, до яких належить співробітник.</li>
+<li><code>responsibilityDepartmentCodes</code> <em>(string)</em>: Список кодів відділів, за якими співробітник несе відповідальність.</li>
+<li><code>deleted</code> <em>(string)</em>: Позначка, що співробітник видалений.</li>
+<li><code>supplier</code> <em>(string)</em>: Інформація про те, чи є співробітник постачальником.</li>
+<li><code>employee</code> <em>(string)</em>: Інформація про те, чи є співробітник працівником.</li>
+<li><code>client</code> <em>(string)</em>: Інформація про те, чи є співробітник клієнтом.</li>
+</ul>
+<h2 id="_3">Список співробітників</h2>
+<p>Метод <code>list()</code> дозволяє отримати список співробітників з системи Syrve. При використанні цього методу, ви можете вказати додатковий параметр <code>deleted</code>, який приймає значення <code>true</code> або <code>false</code>.</p>
+<p><strong>Параметри</strong>:</p>
+<ul>
+<li><code>deleted</code> <em>(опціональний)</em>: Визначає, чи включати видалених співробітників у список.<ul>
+<li><code>true</code>: Список включатиме і видалених співробітників.</li>
+<li><code>false</code>: Список не буде містити видалених співробітників (за замовчуванням).</li>
+</ul>
+</li>
+</ul>
+<p><strong>Приклад використання</strong>:</p>
+<pre><code class="language-php">// Отримати список всіх співробітників (без видалених)
+$response = $syrve-&gt;employees-&gt;list();
+
+// Отримати список співробітників, включаючи видалених
+$response = $syrve-&gt;employees-&gt;list(true);
+</code></pre>
+<h2 id="_4">Список по підрозділу</h2>
+<p>Метод <code>department()</code> дозволяє отримати список співробітників за певним підрозділом у системі Syrve. При використанні цього методу, ви можете вказати два параметра:</p>
+<p><strong>Параметри</strong>:</p>
+<ul>
+<li><code>departmentCode</code> <em>(обов'язковий)</em>: Код підрозділу, за яким потрібно отримати список співробітників.</li>
+<li><code>deleted</code> <em>(опціональний)</em>: Визначає, чи включати видалених співробітників у список.<ul>
+<li><code>true</code>: Список включатиме і видалених співробітників.</li>
+<li><code>false</code>: Список не буде містити видалених співробітників (за замовчуванням).</li>
+</ul>
+</li>
+</ul>
+<p><strong>Приклад використання</strong>:</p>
+<pre><code class="language-php">// Отримати список співробітників підрозділу з кодом &quot;1&quot; (без видалених)
+$response = $syrve-&gt;employees-&gt;department('1');
+
+// Отримати список співробітників підрозділу з кодом &quot;1&quot;, включаючи видалених
+$response = $syrve-&gt;employees-&gt;department('1', true);
+</code></pre>
+<h2 id="_5">Співробітник за ідентифікатором</h2>
+<p>Метод <code>id()</code> дозволяє отримати інформацію про співробітника за його унікальним ідентифікатором (ID) у системі Syrve. Для використання цього методу, вам потрібно передати обов'язковий параметр <code>employeeId</code>, який представляє собою унікальний ідентифікатор співробітника.</p>
+<p><strong>Параметри</strong>:</p>
+<ul>
+<li><code>employeeId</code> <em>(обов'язковий)</em>: Унікальний ідентифікатор співробітника, за яким ви хочете отримати інформацію.</li>
+</ul>
+<p><strong>Приклад використання</strong>:</p>
+<pre><code class="language-php">// Отримати інформацію про співробітника з ідентифікатором 'b8164def-74a7-471d-bb61-d612193f428b'
+$response = $syrve-&gt;employees-&gt;id('b8164def-74a7-471d-bb61-d612193f428b');
+</code></pre>
+<h2 id="_6">Співробітник за кодом</h2>
+<p>Метод <code>code()</code> дозволяє отримати інформацію про співробітника за його кодом у системі Syrve. Для використання цього методу, вам потрібно передати обов'язковий параметр <code>employeeCode</code>, який представляє собою унікальний код співробітника.</p>
+<p><strong>Параметри</strong>:</p>
+<ul>
+<li><code>employeeCode</code> <em>(обов'язковий)</em>: Унікальний код співробітника, за яким ви хочете отримати інформацію.</li>
+</ul>
+<p><strong>Приклад використання</strong>:</p>
+<pre><code class="language-php">// Отримати інформацію про співробітника з кодом '1'
+$response = $syrve-&gt;employees-&gt;code('1');
+</code></pre>
+<h2 id="_7">Створення співробітника</h2>
+<p>Метод <code>create()</code> дозволяє створити нового співробітника у системі Syrve. Для використання цього методу, вам потрібно передати деякі обов'язкові параметри, такі як <code>code</code>,<code>name</code>, та <code>mainRoleCode</code>, які визначають основні атрибути співробітника.</p>
+<p><strong>Параметри</strong>:</p>
+<ul>
+<li><code>id</code> <em>(опціонально)</em>: Унікальний ідентифікатор співробітника, який створюється автоматично, якщо не вказати його явно.</li>
+<li><code>code</code> <em>(обов'язковий)</em>: Код співробітника у системі Syrve.</li>
+<li><code>name</code> <em>(обов'язковий)</em>: Ім'я співробітника.</li>
+<li><code>mainRoleCode</code> <em>(обов'язковий)</em>: Код головної ролі співробітника.</li>
+<li><code>departmentCodes</code> <em>(опціонально)</em>: Список кодів відділів, до яких належить співробітник.</li>
+<li><code>responsibilityDepartmentCodes</code> <em>(опціонально)</em>: Список кодів відділів, за якими співробітник несе відповідальність.</li>
+<li><code>pinCode</code> <em>(опціонально)</em>: PIN-код співробітника, який також створюється автоматично, якщо не передати його в запиті.</li>
+</ul>
+<p><strong>Уточнення</strong>:</p>
+<ul>
+<li>Повний список параметрів та їх опис можна знайти в початковій частині розділу.</li>
+<li>Параметри <code>id</code> та <code>pinCode</code>, якщо не передані, створюються автоматично. Ви можете передати власні значення для цих параметрів, якщо бажаєте контролювати їх.</li>
+<li>У методі <code>create()</code> можна передавати значення <code>null</code> для параметрів, які не є обов'язковими. Наприклад, ви можете використовувати <code>null</code>, щоб створити співробітника без автоматично згенерованого <code>pinCode</code>. Використання <code>null</code> для параметра <code>pinCode</code> дозволяє залишити поле пустим.</li>
+</ul>
+<p><strong>Приклад використання</strong>:</p>
+<pre><code class="language-php">// Створити нового співробітника з обов'язковими параметрами
+$response = $syrve-&gt;employees-&gt;create([
+  'code' =&gt; '1',
+  'name' =&gt; 'Шевченко Микола',
+  'mainRoleCode' =&gt; 'ROLE',
+]);
+
+// Створити нового співробітника зі своїми власними значеннями id та pinCode
+$response = $syrve-&gt;employees-&gt;create([
+  'id' =&gt; 'b8164def-74a7-471d-bb61-d612193f428b',
+  'code' =&gt; '2',
+  'name' =&gt; 'Мельник Володимир',
+  'mainRoleCode' =&gt; 'ROLE',
+  'pinCode' =&gt; '1234',
+]);
+
+// Створити нового співробітника без pinCode
+$response = $syrve-&gt;employees-&gt;create([
+  'id' =&gt; 'b8164def-74a7-471d-bb61-d612193f428b',
+  'code' =&gt; '3',
+  'name' =&gt; 'Іванов Іван',
+  'mainRoleCode' =&gt; 'ROLE',
+  'pinCode' =&gt; null,
+]);
+
+// Створити нового співробітника з вказанням певних відділів
+$response = $syrve-&gt;employees-&gt;create([
+  'code' =&gt; '4',
+  'name' =&gt; 'Поліщук Олександр',
+  'mainRoleCode' =&gt; 'ROLE',
+  'departmentCodes' =&gt; ['1', '2'],
+  'responsibilityDepartmentCodes' =&gt; ['1'],
+]);
+</code></pre>
+<h2 id="_8">Редагувати співробітника</h2>
+<p>Метод <code>edit()</code> дозволяє змінювати дані співробітника у системі Syrve за його унікальним ідентифікатором (ID). Для використання цього методу, вам потрібно передати обов'язковий параметр <code>id</code>, який представляє собою унікальний ідентифікатор співробітника, якого ви бажаєте відредагувати.</p>
+<p><strong>Параметри</strong>:</p>
+<ul>
+<li><code>id</code> <em>(обов'язковий)</em>: Унікальний ідентифікатор співробітника, якого потрібно відредагувати.</li>
+<li><code>phone</code> <em>(опціонально)</em>: Новий телефонний номер співробітника.</li>
+</ul>
+<p><strong>Уточнення</strong>:</p>
+<ul>
+<li>Повний список параметрів та їх опис можна знайти в початковій частині розділу.</li>
+</ul>
+<p><strong>Обмеження</strong>:</p>
+<ul>
+<li>Метод <code>edit()</code> на даний момент не підтримує можливість закріпити співробітника за декількома департаментами.</li>
+</ul>
+<p><strong>Приклад використання</strong>:</p>
+<pre><code class="language-php">// Змінити телефон співробітника з ідентифікатором 'b8164def-74a7-471d-bb61-d612193f428b'
+$response = $syrve-&gt;employees-&gt;edit([
+    'id' =&gt; 'b8164def-74a7-471d-bb61-d612193f428b',
+    'phone' =&gt; '380950000000',
+]);
+</code></pre>
+<h2 id="_9">Видалення співробітника</h2>
+<p>Метод <code>delete()</code> дозволяє видалити співробітника з системи Syrve за його унікальним ідентифікатором (ID). Для використання цього методу, вам потрібно передати обов'язковий параметр <code>employeeId</code>, який представляє собою унікальний ідентифікатор співробітника, якого ви бажаєте видалити.</p>
+<p><strong>Параметри</strong>:</p>
+<ul>
+<li><code>employeeId</code> <em>(обов'язковий)</em>: Унікальний ідентифікатор співробітника, якого потрібно видалити.</li>
+</ul>
+<p><strong>Приклад використання</strong>:</p>
+<pre><code class="language-php">// Видалити співробітника з ідентифікатором 'b8164def-74a7-471d-bb61-d612193f428b'
+$response = $syrve-&gt;employees-&gt;delete('b8164def-74a7-471d-bb61-d612193f428b');
+</code></pre>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/VPetrenko376/syrve-api/" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../.." style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+  </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme_extra.js" defer></script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
