@@ -1,0 +1,13 @@
+site_name: SyrveApi
+repo_url: https://github.com/VPetrenko376/syrve-api/
+edit_uri: blob/main/docs/
+
+nav:
+    - Початок роботи: 'index.md'
+    - Доступні методи: 
+      - 'Співробітники': 'methods/employees.md'
+theme: 
+  name: readthedocs
+  titles_only: false
+  prev_next_buttons_location: none
+  locale: uk
