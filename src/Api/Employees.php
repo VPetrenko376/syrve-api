@@ -53,7 +53,10 @@ class Employees
         ];
         
         $response = HttpClient::request('PUT', 'employees/byId/' . $processedEmployeeData['id'], $options);
+        
         $array = ApiUtilities::xmlToArray($response);
+        $array['pinCode'] = $processedEmployeeData['pinCode'];
+
         return $array;
     }
 
