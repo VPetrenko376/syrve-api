@@ -55,7 +55,10 @@ class Employees
         $response = HttpClient::request('PUT', 'employees/byId/' . $processedEmployeeData['id'], $options);
         
         $array = ApiUtilities::xmlToArray($response);
-        $array['pinCode'] = $processedEmployeeData['pinCode'];
+        
+        if (isset($processedEmployeeData['pinCode'])) {
+            $array['pinCode'] = $processedEmployeeData['pinCode'];
+        }
 
         return $array;
     }
@@ -94,6 +97,11 @@ class Employees
 
         $response = HttpClient::request('POST', 'employees/byId/' . $employeeData['id'], $options);
         $array = ApiUtilities::xmlToArray($response);
+
+        if (!isset($array['error']) && isset($employeeData['pinCode'])) {
+            $array['pinCode'] = $employeeData['pinCode'];
+        }
+
         return $array;
     }
     
@@ -101,5 +109,12 @@ class Employees
     {
         $response = HttpClient::request('DELETE', 'employees/byId/' . $employeeId);
         return $response;
+    }
+
+    public function roles($deleted = false)
+    {
+        $response = HttpClient::request('GET', 'employees/roles?includeDeleted=' . $deleted);
+        $array = ApiUtilities::xmlToArray($response);
+        return $array['role'];
     }
 }

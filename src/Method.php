@@ -9,6 +9,7 @@ class Method
     private $method;
 
     private static $classMap = [
+        'documents' => Api\Documents::class,
         'employees' => Api\Employees::class,
         'entities' => Api\Entities::class,
     ];
