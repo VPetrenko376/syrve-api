@@ -3,7 +3,7 @@
 namespace Sloth\SyrveApi;
 
 use \GuzzleHttp\Client;
-use \GuzzleHttp\Exception\ClientException;
+use \GuzzleHttp\Exception\BadResponseException;
 
 class HttpClient
 {
@@ -23,9 +23,17 @@ class HttpClient
     public static function request($method, $path, $options = [])
     {
         try {
-            return self::$client->request($method, $path, $options)->getBody()->getContents();
+            $response = self::$client->request($method, $path, $options)->getBody()->getContents();
+            
+            if (preg_match('/^\s*<\?xml[^\?]*\?>/', $response)) {
+                $response = ApiUtilities::xmlToArray($response);
+            } else {
+                $response = json_decode($response, true);
+            }
+            
+            return $response;
         }
-        catch (ClientException $e) {
+        catch (BadResponseException  $e) {
             $response = $e->getResponse()->getBody()->getContents();
             return ['error' => $response];
         }

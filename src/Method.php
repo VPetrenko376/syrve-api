@@ -10,8 +10,11 @@ class Method
 
     private static $classMap = [
         'documents' => Api\Documents::class,
+        'corporation' => Api\Corporation::class,
+        'suppliers' => Api\Suppliers::class,
         'employees' => Api\Employees::class,
         'entities' => Api\Entities::class,
+        'products' => Api\Products::class,
     ];
 
     public function __construct($client)

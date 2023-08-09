@@ -4,35 +4,44 @@ namespace Sloth\SyrveApi\Api;
 
 use Sloth\SyrveApi\ApiUtilities;
 use Sloth\SyrveApi\HttpClient;
+use DateTime;
 
 class Employees
 {
-    public function list($deleted = false)
+    public function list($deleted = 'false')
     {
         $response = HttpClient::request('GET', 'employees?includeDeleted=' . $deleted);
-        $array = ApiUtilities::xmlToArray($response);
-        return $array['employee'];
+        return $response;
+    }
+
+    public function department($departmentCode, $deleted = 'false')
+    {
+        $response = HttpClient::request('GET', 'employees/byDepartment/' . $departmentCode . '?includeDeleted=' . $deleted);
+        return $response;
     }
 
     public function id($employeeId)
     {
         $response = HttpClient::request('GET', 'employees/byId/' . $employeeId);
-        $array = ApiUtilities::xmlToArray($response);
-        return $array;
+        return $response;
     }
 
     public function code($employeeCode)
     {
         $response = HttpClient::request('GET', 'employees/byCode/' . $employeeCode);
-        $array = ApiUtilities::xmlToArray($response);
-        return $array['employee'];
+        return $response;
     }
 
-    public function department($departmentCode, $deleted = false)
+    public function search($params, $deleted = 'false')
     {
-        $response = HttpClient::request('GET', 'employees/byDepartment/' . $departmentCode . '?includeDeleted=' . $deleted);
-        $array = ApiUtilities::xmlToArray($response);
-        return $array['employee'];
+        $concatParams = '';
+
+        foreach ($params as $key => $value) {
+            $concatParams .= "&$key={$value}";
+        }
+
+        $response = HttpClient::request('GET', 'employees/search?includeDeleted=' . $deleted . $concatParams);        
+        return $response;
     }
 
     public function create($employeeData)
@@ -44,38 +53,19 @@ class Employees
             'deleted' => 'false',
             'employee' => 'true'
         ];
-        $processedEmployeeData = ApiUtilities::setDefaultValues($defaultValues, $employeeData);
-        $xml = ApiUtilities::arrayToXML($processedEmployeeData, 'employee');
 
-        $options = [
-            'headers' => ['content-type' => 'application/xml'],
-            'body' => $xml
-        ];
+        if (isset($employeeData['birthday'])) {
+            $employeeData['birthday'] = (new DateTime($employeeData['birthday']))->format('Y-m-d\TH:i:sP');
+        }
         
-        $response = HttpClient::request('PUT', 'employees/byId/' . $processedEmployeeData['id'], $options);
+        if (isset($employeeData['hireDate'])) {
+            $employeeData['hireDate'] = (new DateTime($employeeData['hireDate']))->format('Y-m-d\TH:i:sP');
+        }
         
-        $array = ApiUtilities::xmlToArray($response);
-        
-        if (isset($processedEmployeeData['pinCode'])) {
-            $array['pinCode'] = $processedEmployeeData['pinCode'];
+        if (isset($employeeData['fireDate'])) {
+            $employeeData['fireDate'] = (new DateTime($employeeData['fireDate']))->format('Y-m-d\TH:i:sP');
         }
 
-        return $array;
-    }
-
-    public function editTest($employeeData)
-    {
-        $apiData  = $this->id($employeeData['id']);
-        $defaultValues = [
-            'id' => $apiData['id'],
-            'code' => $apiData['code'],
-            'name' => $apiData['name'],
-            'login' => '',
-            'departmentCodes' => !empty($apiData['departmentCodes']) ? $apiData['departmentCodes'] : null,
-            'responsibilityDepartmentCodes' => !empty($apiData['responsibilityDepartmentCodes']) ? $apiData['responsibilityDepartmentCodes'] : null,
-            'deleted' => $apiData['deleted'],
-            'employee' => $apiData['employee']
-        ];
         $processedEmployeeData = ApiUtilities::setDefaultValues($defaultValues, $employeeData);
         $xml = ApiUtilities::arrayToXML($processedEmployeeData, 'employee');
 
@@ -85,24 +75,39 @@ class Employees
         ];
 
         $response = HttpClient::request('PUT', 'employees/byId/' . $processedEmployeeData['id'], $options);
-        // $array = ApiUtilities::xmlToArray($response);
+                
+        if (!isset($response['error']) && isset($processedEmployeeData['pinCode'])) {
+            $response['pinCode'] = $processedEmployeeData['pinCode'];
+        }
+
         return $response;
     }
 
     public function edit($employeeData)
     {
+        if (isset($employeeData['birthday'])) {
+            $employeeData['birthday'] = (new DateTime($employeeData['birthday']))->format('Y-m-d\TH:i:sP');
+        }
+        
+        if (isset($employeeData['hireDate'])) {
+            $employeeData['hireDate'] = (new DateTime($employeeData['hireDate']))->format('Y-m-d\TH:i:sP');
+        }
+        
+        if (isset($employeeData['fireDate'])) {
+            $employeeData['fireDate'] = (new DateTime($employeeData['fireDate']))->format('Y-m-d\TH:i:sP');
+        }
+
         $options = [
             'form_params' => $employeeData
         ];
 
         $response = HttpClient::request('POST', 'employees/byId/' . $employeeData['id'], $options);
-        $array = ApiUtilities::xmlToArray($response);
 
-        if (!isset($array['error']) && isset($employeeData['pinCode'])) {
-            $array['pinCode'] = $employeeData['pinCode'];
+        if (!isset($response['error']) && isset($employeeData['pinCode'])) {
+            $response['pinCode'] = $employeeData['pinCode'];
         }
 
-        return $array;
+        return $response;
     }
     
     public function delete($employeeId)
@@ -111,10 +116,9 @@ class Employees
         return $response;
     }
 
-    public function roles($deleted = false)
+    public function roles($deleted = 'false')
     {
         $response = HttpClient::request('GET', 'employees/roles?includeDeleted=' . $deleted);
-        $array = ApiUtilities::xmlToArray($response);
-        return $array['role'];
+        return $response;
     }
 }

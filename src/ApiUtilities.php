@@ -2,7 +2,6 @@
 
 namespace Sloth\SyrveApi;
 
-use Exception;
 use SimpleXMLElement;
 
 class ApiUtilities
@@ -11,7 +10,6 @@ class ApiUtilities
     {
         foreach ($data as $key => $value) {
             $element = is_numeric($key) ? $itemName : $key;
-
             if (is_array($value)) {
                 if (!is_numeric($key)) {
                     if ($itemName === null) {
@@ -24,7 +22,7 @@ class ApiUtilities
                     self::arrayToXMLElement($value, $xml, $itemName);
                 }
             } else {
-                    $xml->addChild($element, htmlspecialchars($value));
+                $xml->addChild($element, htmlspecialchars($value));
             }
         }
     }
@@ -36,24 +34,55 @@ class ApiUtilities
         return $xml->asXML();
     }
 
+    private static function replaceEmptyXml($value) {
+        if (is_object($value)) {
+            $valueArray = (array)$value;
+            if (empty($valueArray)) {
+                return '';
+            }
+            foreach ($valueArray as $key => $subValue) {
+                $valueArray[$key] = self::replaceEmptyXml($subValue);
+            }
+            return $valueArray;
+        } elseif (is_array($value)) {
+            foreach ($value as $key => $subValue) {
+                $value[$key] = self::replaceEmptyXml($subValue);
+            }
+            return $value;
+        }
+        return $value;
+    }
+
     public static function xmlToArray($data)
     {
-        if (is_array($data)) {
-            $response = $data;
-        } else {
+        if (!is_array($data)) {
             $simpleXml = simplexml_load_string($data);
-            $json = json_encode($simpleXml);
-            $response = json_decode($json, true);
+            $children = $simpleXml->children();
+            $data = [];
+            foreach ($children as $child) {
+                $childArray = (array)$child;
+                foreach ($childArray as $key => $value) {
+                        $childArray[$key] = self::replaceEmptyXml($value);
+                }
+                if (!empty($childArray)) {
+                    $data[] = $childArray;
+                }
+            }
+            if (count($data) === 1) {
+                $data = $data[0];
+            }
         }
-        return $response;
+        return $data;
     }
 
     public static function setDefaultValues($defaultValues, $data) {
         foreach ($defaultValues as $key => $defaultValue) {
             if (array_key_exists($key, $data)) {
+                
                 if ($data[$key] === null) {
                     unset($data[$key]);
                 }
+
             } else {
                 $data[$key] = $defaultValue;
             }
