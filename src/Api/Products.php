@@ -6,9 +6,17 @@ use Sloth\SyrveApi\HttpClient;
 
 class Products
 {
-    public function list($deleted = 'false')
+    public function list($deleted = 'false', $types = null)
     {
-        $response = HttpClient::request('GET', 'v2/entities/products/list?includeDeleted=' . $deleted);
+        $url = "v2/entities/products/list?includeDeleted={$deleted}";
+
+        if (isset($types)) {
+            foreach ($types as $value) {
+                $url .= "&types={$value}";
+            }
+        }
+
+        $response = HttpClient::request('GET', $url);
         return $response;
     }
 
