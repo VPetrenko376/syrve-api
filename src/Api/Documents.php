@@ -7,15 +7,20 @@ use DateTime;
 
 class Documents
 {
-    public function export($typeInvoice, $fromDate, $toDate, $supplierId = null, $deleted = false)
+    public function export($typeInvoice, $fromDate, $toDate, $number = null, $supplierId = null, $deleted = false)
     {
         $fromDate = (new DateTime($fromDate))->format('Y-m-d');
         $toDate = (new DateTime($toDate))->format('Y-m-d');
+        $byNumber = isset($number) ? '/byNumber' : '';
 
         if ($typeInvoice === 'incoming' || $typeInvoice === 'outgoing') {
-            $url = "documents/export/{$typeInvoice}Invoice?from={$fromDate}&to={$toDate}";
+            $url = "documents/export/{$typeInvoice}Invoice{$byNumber}?from={$fromDate}&to={$toDate}";
         } else {
             return ['error' => "The invoice type '{$typeInvoice}' does not exist."];
+        }
+
+        if ($byNumber) {
+            $url .= "&number={$number}&currentYear=false";
         }
 
         if (isset($supplierId)) {
@@ -26,7 +31,7 @@ class Documents
 
         $response = HttpClient::request('GET', $url);
 
-        if (!isset($response['error']) && !$deleted) {
+        if (!isset($response['error']) && !$deleted && !$byNumber) {
             $response = array_filter($response, function($value) {
                 if ($value['status'] != 'DELETED') {
                     return $value;
