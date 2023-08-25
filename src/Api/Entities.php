@@ -11,4 +11,10 @@ class Entities
         $response = HttpClient::request('GET', 'v2/entities/list?rootType=' . $rootType);
         return $response;
     }
+
+    public function priceCategories()
+    {
+        $response = HttpClient::request('GET', 'v2/entities/priceCategories');
+        return $response;
+    }
 }
