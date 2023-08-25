@@ -15,6 +15,7 @@ class Method
         'employees' => Api\Employees::class,
         'entities' => Api\Entities::class,
         'products' => Api\Products::class,
+        'price' => Api\Price::class,
     ];
 
     public function __construct($client)
