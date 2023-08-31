@@ -2,9 +2,9 @@
 
 namespace Sloth\SyrveApi\Api;
 
+use DateTime;
 use Sloth\SyrveApi\ApiUtilities;
 use Sloth\SyrveApi\HttpClient;
-use DateTime;
 
 class Employees
 {

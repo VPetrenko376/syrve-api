@@ -2,11 +2,11 @@
 
 namespace Sloth\SyrveApi\Api;
 
-use Sloth\SyrveApi\HttpClient;
 use DateTime;
+use Sloth\SyrveApi\HttpClient;
 
-
-class Price {
+class Price 
+{
     public function list($dateFrom, $departmentId)
     {
         $dateFrom = (new DateTime($dateFrom))->format('Y-m-d');

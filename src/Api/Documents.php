@@ -2,8 +2,8 @@
 
 namespace Sloth\SyrveApi\Api;
 
-use Sloth\SyrveApi\HttpClient;
 use DateTime;
+use Sloth\SyrveApi\HttpClient;
 
 class Documents
 {
