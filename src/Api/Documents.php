@@ -32,6 +32,16 @@ class Documents
         $response = HttpClient::request('GET', $url);
 
         if (!isset($response['error']) && !$deleted && !$byNumber) {
+            //TEMP
+            if (array_key_exists('id', $response)) {
+                if ($response['status'] == 'DELETED') {
+                    return [];
+                }
+                
+                return $response;
+            }
+            //TEMP
+
             $response = array_filter($response, function($value) {
                 if ($value['status'] != 'DELETED') {
                     return $value;

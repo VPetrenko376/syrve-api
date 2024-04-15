@@ -7,7 +7,7 @@ use Sloth\SyrveApi\HttpClient;
 
 class Reports
 {
-    public function olap($reportType, $fromDate, $toDate, $groupByRowFields, $aggregateFields, $accountType = null, $buildSummary = false)
+    public function olap($reportType, $fromDate, $toDate, $groupByRowFields, $aggregateFields, $accountName = null, $jurPerson = null, $buildSummary = false)
     {
         $fromDate = (new DateTime($fromDate))->format('Y-m-d');
         $toDate = (new DateTime($toDate))->format('Y-m-d');
@@ -20,17 +20,20 @@ class Reports
                 'periodType' => 'CUSTOM',
                 'from' => $fromDate . 'T00:00:00',
                 'to' => $toDate . 'T23:59:59'
-            ],
-            "TransactionSide" => [
-                "filterType" => "IncludeValues",
-                "values" => ["CREDIT"]
-            ]   
+            ]
         ];
 
-        if ($accountType) {
-            $filters['Account.Type'] = [
+        if ($accountName) {
+            $filters['Account.Name'] = [
                 'filterType' => 'IncludeValues',
-                'values' => $accountType
+                'values' => $accountName
+            ];
+        }
+
+        if ($jurPerson) {
+            $filters['Department.JurPerson'] = [
+                'filterType' => 'IncludeValues',
+                'values' => $jurPerson
             ];
         }
 
@@ -58,25 +61,38 @@ class Reports
     {
         $timestamp = (new DateTime($timestamp))->format('Y-m-d\TH:i:s');
 
-        $url = "v2/reports/balance/stores?&timestamp={$timestamp}";
+        $url = "v2/reports/balance/stores";
 
-        if ($departments) {
-            foreach ($departments as $value) {
-                $url .= "&department={$value}";
-            }
-        }
+        $queryParams = [
+            'timestamp' => $timestamp,
+            'department' => $departments,
+            'store' => $stores,
+            'product' => $products,
+        ];
 
-        if ($stores) {
-            foreach ($stores as $value) {
-                $url .= "&store={$value}";
-            }
-        }
+        $url .= '?' . http_build_query($queryParams);
+        $url = preg_replace('/%5B[0-9]+%5D/simU', '', $url);
 
-        if ($products) {
-            foreach ($products as $value) {
-                $url .= "&product={$value}";
-            }
-        }
+        $response = HttpClient::request('GET', $url);
+
+        return $response;
+    }
+
+    public function balanceCounteragents($timestamp = null, $accounts = null, $counteragents = null, $departments = null)
+    {
+        $timestamp = (new DateTime($timestamp))->format('Y-m-d\TH:i:s');
+
+        $url = "v2/reports/balance/counteragents";
+
+        $queryParams = [
+            'timestamp' => $timestamp,
+            'account' => $accounts,
+            'counteragent' => $counteragents,
+            'department' => $departments,
+        ];
+
+        $url .= '?' . http_build_query($queryParams);
+        $url = preg_replace('/%5B[0-9]+%5D/simU', '', $url);
 
         $response = HttpClient::request('GET', $url);
 
