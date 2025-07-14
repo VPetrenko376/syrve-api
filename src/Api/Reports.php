@@ -57,6 +57,65 @@ class Reports
         return $response;
     }
 
+    public function sales(array $options): array
+    {
+        $url = 'v2/reports/olap';
+
+        $groupByRowFields = [
+            'Department.Id',
+            'Department',
+            'OpenTime',
+            'CloseTime',
+            'OrderNum',
+            'DishName'
+        ];
+
+        $aggregateFields = [
+            'DishAmountInt',
+            'DishDiscountSumInt'
+        ];
+
+        $filters = [
+            'OpenDate.Typed' => [
+                'filterType' => 'DateRange',
+                'periodType' => 'CUSTOM',
+                'from' => $options['fromDate'],
+                'to' => $options['toDate']
+            ],
+            'Department.Id' => [
+                'filterType' => 'IncludeValues',
+                'values' => $options['departments'] ?? []
+            ],
+            'DeletedWithWriteoff' => [
+                'filterType' => 'IncludeValues',
+                'values' => ['NOT_DELETED']
+            ],
+            'OrderDeleted' => [
+                'filterType' => 'IncludeValues',
+                'values' => ['NOT_DELETED']
+            ]
+        ];
+
+        $jsonData = [
+            'reportType' => 'SALES',
+            'buildSummary' => $options['buildSummary'] ?? false,
+            'groupByRowFields' => $options['groupByRowFields'] ?? $groupByRowFields,
+            'aggregateFields' => $options['aggregateFields'] ?? $aggregateFields,
+            'filters' => $options['filters'] ?? $filters
+        ];
+
+        $httpOptions = [
+            'json' => $jsonData,
+            'headers' => [
+                'Content-Type' => 'application/json',
+            ]
+        ];
+
+        $response = HttpClient::request('POST', $url, $httpOptions);
+
+        return $response;
+    }
+
     public function balance($timestamp, $departments = null, $stores = null, $products = null)
     {
         $timestamp = (new DateTime($timestamp))->format('Y-m-d\TH:i:s');
