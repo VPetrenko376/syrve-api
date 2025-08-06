@@ -67,6 +67,7 @@ class Reports
             'OpenTime',
             'CloseTime',
             'OrderNum',
+            'DishGroup.TopParent',
             'DishName'
         ];
 
